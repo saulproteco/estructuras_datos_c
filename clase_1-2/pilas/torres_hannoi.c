@@ -5,8 +5,8 @@
 
 int leerEntero(int min, int max);
 void jugar(int tamanio_torres);
-void imprimirTorres(Pila ** torre);
-bool movimientoValido(Pila ** torre, int origen, int destino);
+void imprimirTorres(PilaEstatica ** torre);
+bool movimientoValido(PilaEstatica ** torre, int origen, int destino);
 
 int main(void) {
     int altura;
@@ -21,7 +21,7 @@ int main(void) {
 }
 
 void jugar(int tamanio_torres) {
-    Pila * torre[3];
+    PilaEstatica * torre[3];
 
     for (int i = 0; i < 3; i++) torre[i] = nuevaPila(tamanio_torres);
 
@@ -57,7 +57,7 @@ void jugar(int tamanio_torres) {
     for (int i = 0; i < 3; i++) borrarPila(torre[i]);
 }
 
-void imprimirTorres(Pila ** torre) {
+void imprimirTorres(PilaEstatica ** torre) {
     for (int j = (*torre)->tamanio - 1; j >= 0; j--) {
         for (int i = 0; i < 3; i++) {
             printf("| %c |\t", torre[i]->elementos[j] ?
@@ -67,7 +67,7 @@ void imprimirTorres(Pila ** torre) {
     }
 }
 
-bool movimientoValido(Pila ** torre, int origen, int destino) {
+bool movimientoValido(PilaEstatica ** torre, int origen, int destino) {
     if (estaVacia(torre[origen]))
         return false;
 

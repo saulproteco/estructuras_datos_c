@@ -1,14 +1,15 @@
 #include "pilad.h"
+#include <stdlib.h>
 
-Pila * nuevaPila(void) {
-    return calloc(1, sizeof(Pila));
+PilaDinamica * nuevaPila(void) {
+    return calloc(1, sizeof(PilaDinamica));
 }
 
-void  borrarPila(Pila * pila) {
+void  borrarPila(PilaDinamica * pila) {
     free(pila);
 }
 
-bool insertar(Pila * pila, Tipo elemento) {
+bool insertar(PilaDinamica * pila, Tipo elemento) {
     Nodo * nuevo_nodo = malloc(sizeof(Nodo));
 
     if (!nuevo_nodo)
@@ -22,7 +23,7 @@ bool insertar(Pila * pila, Tipo elemento) {
     return true;
 }
 
-bool eliminar(Pila * pila, Tipo * sacado) {
+bool eliminar(PilaDinamica * pila, Tipo * sacado) {
     if (estaVacia(pila))
         return false;
 
@@ -36,6 +37,6 @@ bool eliminar(Pila * pila, Tipo * sacado) {
     return true;
 }
 
-bool estaVacia(Pila * pila) {
+inline bool estaVacia(const PilaDinamica * pila) {
     return pila->num_elementos == 0;
 }

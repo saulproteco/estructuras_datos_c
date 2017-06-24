@@ -1,22 +1,35 @@
 #include "pilae.h"
+#include <stdlib.h>
 
-Pila * nuevaPila(int tamanio) {
-    Pila * nueva_pila = malloc(sizeof(Pila));
+PilaEstatica * nuevaPila(int32_t tamanio) {
+    if (tamanio < 0)
+        return NULL;
+
+    PilaEstatica * nueva_pila = malloc(sizeof(PilaEstatica));
+
+    if (!nueva_pila)
+        return NULL;
 
     // Se supone que los argumentos de calloc van al revez pero me vale!
     nueva_pila->elementos = calloc(sizeof(Tipo), tamanio);
+    if (!nueva_pila->elementos) {
+        free(nueva_pila);
+        return NULL;
+    }
+
+
     nueva_pila->tamanio = tamanio;
     nueva_pila->tope = -1;
 
     return nueva_pila;
 }
 
-void  borrarPila(Pila * pila) {
+void  borrarPila(PilaEstatica * pila) {
     free(pila->elementos);
     free(pila);
 }
 
-bool insertar(Pila * pila, Tipo elemento) {
+bool insertar(PilaEstatica * pila, Tipo elemento) {
     if (estaLlena(pila))
         return false;
 
@@ -24,7 +37,7 @@ bool insertar(Pila * pila, Tipo elemento) {
     return true;
 }
 
-bool eliminar(Pila * pila, Tipo * sacado) {
+bool eliminar(PilaEstatica * pila, Tipo * sacado) {
     if (estaVacia(pila))
         return false;
 
@@ -34,14 +47,14 @@ bool eliminar(Pila * pila, Tipo * sacado) {
     return true;
 }
 
-Tipo checar(Pila * pila) {
+Tipo checar(const PilaEstatica * pila) {
     return estaVacia(pila) ? VALOR_DEFECTO : pila->elementos[pila->tope];
 }
 
-bool estaVacia(Pila * pila) {
+inline bool estaVacia(const PilaEstatica * pila) {
     return pila->tope == - 1;
 }
 
-bool estaLlena(Pila * pila) {
+inline bool estaLlena(const PilaEstatica * pila) {
     return pila->tope == pila->tamanio - 1;
 }
