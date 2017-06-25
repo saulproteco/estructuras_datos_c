@@ -1,38 +1,47 @@
 #include <stdio.h>
-#include "pilae.h" // Cabecera de la pila estAtica
+#include <stdlib.h>
 
-#define ALTURA_MAXIMA 5
+#include "pila_estatica/pilae.h" // Cabecera de la pila estAtica
 
-int leerEntero(int min, int max);
-void jugar(int tamanio_torres);
+#define ALTURA_MAXIMA 7
+
+int32_t leerEntero(int32_t min, int32_t max);
+void jugar(int32_t tamanio_torres);
 void imprimirTorres(PilaEstatica ** torre);
-bool movimientoValido(PilaEstatica ** torre, int origen, int destino);
+bool movimientoValido(PilaEstatica ** torre, int32_t origen, int32_t destino);
 
 int main(void) {
-    int altura;
-    printf("Elija la altura para jugar (2-5): ");
-    altura = leerEntero(2, 5);
+    int32_t altura;
+    printf("Elija la altura para jugar (2-%d): ", ALTURA_MAXIMA);
+    altura = leerEntero(2, ALTURA_MAXIMA);
 
     jugar(altura);
 
     printf("Felicidades, has ganado el juego de las "
             "torres de hannoi con %d discos\n", altura);
-    return 0;
+    return EXIT_SUCCESS;
 }
 
-void jugar(int tamanio_torres) {
+void jugar(int32_t tamanio_torres) {
     PilaEstatica * torre[3];
 
-    for (int i = 0; i < 3; i++) torre[i] = nuevaPila(tamanio_torres);
+    for (int32_t i = 0; i < 3; i++) {
+        torre[i] = nuevaPila(tamanio_torres);
 
-    for (int i = tamanio_torres; i >= 1; i--)
+        if (!torre[i]) {
+            perror("Error de asignaciOn:");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    for (int32_t i = tamanio_torres; i >= 1; i--)
         insertar(torre[0], i);
 
     printf("\n");
 
     bool ganado = false;
-    int origen, destino;
-    int disco;
+    int32_t origen, destino;
+    int32_t disco;
 
     while (!ganado) {
         imprimirTorres(torre);
@@ -67,7 +76,7 @@ void imprimirTorres(PilaEstatica ** torre) {
     }
 }
 
-bool movimientoValido(PilaEstatica ** torre, int origen, int destino) {
+bool movimientoValido(PilaEstatica ** torre, int32_t origen, int32_t destino) {
     if (estaVacia(torre[origen]))
         return false;
 
@@ -80,8 +89,8 @@ bool movimientoValido(PilaEstatica ** torre, int origen, int destino) {
     return false;
 }
 
-int leerEntero(int min, int max) {
-    int auxiliar;
+int32_t leerEntero(int32_t min, int32_t max) {
+    int32_t auxiliar;
     while ( scanf("%d", &auxiliar) == 0 || auxiliar < min || auxiliar > max )
         scanf("%*[^\n]%*c");
 

@@ -1,6 +1,13 @@
+/*========================================================*
+ * COdigo fuente para hacer uso de una pila de tamanio    *
+ * estatico dentro del lenguaje C.                        *
+ *========================================================*/
+
+/*-* Bibliotecas que no requieren verse publicamente *-*/
 #include "pilae.h"
 #include <stdlib.h>
 
+/*-* Constructor / Desctructor *-*/
 PilaEstatica * nuevaPila(int32_t tamanio) {
     if (tamanio < 0)
         return NULL;
@@ -29,6 +36,7 @@ void  borrarPila(PilaEstatica * pila) {
     free(pila);
 }
 
+/*-* Funciones que modifican los dAtos guardados *-*/
 bool insertar(PilaEstatica * pila, Tipo elemento) {
     if (estaLlena(pila))
         return false;
@@ -47,7 +55,8 @@ bool eliminar(PilaEstatica * pila, Tipo * sacado) {
     return true;
 }
 
-Tipo checar(const PilaEstatica * pila) {
+/*-* Auxiliares de uso rApido *-*/
+inline Tipo checar(const PilaEstatica * pila) {
     return estaVacia(pila) ? VALOR_DEFECTO : pila->elementos[pila->tope];
 }
 

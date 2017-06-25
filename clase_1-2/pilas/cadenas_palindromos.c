@@ -1,22 +1,25 @@
 #include <stdio.h>
 #include <string.h>
-#include "pilad.h"
+#include <stdlib.h>
+#include "pila_dinamica/pilad.h"
+
+#define TAMANIO_CADENA 100
 
 char * invertirCadena(char * cadena);
 
-Pila * pila_caracteres;
+PilaDinamica * pila_caracteres;
 
 int main(void) {
     pila_caracteres = nuevaPila();
 
     bool continuar;
-    char cadena[100];
+    char cadena[TAMANIO_CADENA];
     char * invertida;
 
     do {
         printf("\nIngrese una cadena para determinar si es un palindromo:\n");
 
-        fgets(cadena, 100, stdin);
+        fgets(cadena, TAMANIO_CADENA, stdin);
         if (cadena[strlen(cadena) - 1] == '\n')
             cadena[strlen(cadena) - 1] = '\0';
 
@@ -38,22 +41,22 @@ int main(void) {
     } while (continuar);
 
     printf("Vuelva pronto :)\n");
-    return 0;
+    return EXIT_SUCCESS;
 }
 
 char * invertirCadena(char * cadena) {
-    int longitud = strlen(cadena);
+    int32_t longitud = strlen(cadena);
     char * invertida = malloc(longitud + 1);
 
     if (!invertida) {
         perror("Error de asignacion:");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
-    for (int i = 0; i < longitud; i++)
+    for (int32_t i = 0; i < longitud; i++)
         insertar(pila_caracteres, cadena[i]);
 
-    for (int i = 0; i < longitud; i++) {
+    for (int32_t i = 0; i < longitud; i++) {
         char caracter_sacado;
         eliminar(pila_caracteres, &caracter_sacado);
         invertida[i] = caracter_sacado;
