@@ -1,0 +1,38 @@
+# depslib dependency file v1.0
+1498418195 source:c:\users\servidor\desktop\snake\colad.c
+	"colad.h"
+	<stdlib.h>
+
+1498424706 c:\users\servidor\desktop\snake\colad.h
+	<stdbool.h>
+	<stdint.h>
+	<windows.h>
+
+1498430699 source:c:\users\servidor\desktop\snake\main.c
+	<windows.h>
+	<gl/gl.h>
+	"juego.h"
+
+1498430751 c:\users\servidor\desktop\snake\juego.h
+	"colad.h"
+	<stdio.h>
+
+1498418195 source:c:\users\saul\desktop\snake\colad.c
+	"colad.h"
+	<stdlib.h>
+
+1498424706 c:\users\saul\desktop\snake\colad.h
+	<stdbool.h>
+	<stdint.h>
+	<windows.h>
+
+1498449959 source:c:\users\saul\desktop\snake\main.c
+	<windows.h>
+	<gl/gl.h>
+	"juego.h"
+
+1498451341 c:\users\saul\desktop\snake\juego.h
+	"colad.h"
+	<stdio.h>
+	<stdlib.h>
+
