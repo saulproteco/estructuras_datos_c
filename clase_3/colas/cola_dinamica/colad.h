@@ -1,3 +1,8 @@
+/*========================================================*
+ * Archivo de cabecera para hacer uso de colas de tamanio *
+ * dinAmico en C                                          *
+ *========================================================*/
+
 /*-* Bibliotecas que requieren ser publicas *-*/
 #include <stdbool.h>
 #include <stdint.h>

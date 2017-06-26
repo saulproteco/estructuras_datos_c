@@ -1,3 +1,7 @@
+/*==================================================*
+ * COdigo fuente para hacer uso de colas de tamanio *
+ * dinAmico en C                                    *
+ *==================================================*/
 
 /*-* Bibliotecas que no necesitan conocerse publicamente *-*/
 #include "colad.h"
@@ -25,7 +29,12 @@ bool insertar(ColaDinamica * cola, Tipo elemento) {
         return false;
 
     nuevo_nodo->dato = elemento;
-    cola->ultimo->siguiente = nuevo_nodo;
+
+    if (estaVacia(cola))
+        cola->primero = nuevo_nodo;
+    else
+        cola->ultimo->siguiente = nuevo_nodo;
+
     cola->ultimo = nuevo_nodo;
 
     cola->numero_elementos++;
@@ -47,7 +56,7 @@ bool eliminar(ColaDinamica * cola, Tipo * sacado) {
 
 /*-* Auxiliares de uso rApido (en lInea para mayor eficiencia) *-*/
 inline Tipo checar(const ColaDinamica * cola) {
-    return cola->primero->dato;
+    return cola->primero ? cola->primero->dato : VALOR_DEFECTO;
 }
 
 inline bool estaVacia(const ColaDinamica * cola) {
