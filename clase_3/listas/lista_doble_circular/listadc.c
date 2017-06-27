@@ -1,11 +1,11 @@
-#include "listals.h"
+#include "listadc.h"
 #include <stdlib.h>
 
-ListaSimple * nuevaLista(void) {
-    return calloc(1, sizeof(ListaSimple));
+ListaCircular * nuevaLista(void) {
+    return calloc(1, sizeof(ListaCircular));
 }
 
-void eliminarLista(ListaSimple * lista) {
+void eliminarLista(ListaCircular * lista) {
     Tipo nodo;
     while (!estaVacia(lista)) {
         eliminarPrimero(lista, &nodo);
@@ -14,7 +14,7 @@ void eliminarLista(ListaSimple * lista) {
     free(lista);
 }
 
-bool insertarPrincipio(ListaSimple * lista, Tipo elemento) {
+bool insertarPrincipio(ListaCircular * lista, Tipo elemento) {
     Nodo * nuevo_nodo = malloc(sizeof(Nodo));
 
     if (!nuevo_nodo)
@@ -25,15 +25,17 @@ bool insertarPrincipio(ListaSimple * lista, Tipo elemento) {
     if (estaVacia(lista))
         lista->ultimo = nuevo_nodo;
     else
-        lista->primero->siguiente = nuevo_nodo;
+        lista->primero->anterior = nuevo_nodo;
 
     lista->primero = nuevo_nodo;
-    lista->numero_elementos++;
+    nuevo_nodo->siguiente = lista->primero;
+    nuevo_nodo->anterior = lista->ultimo;
 
+    lista->numero_elementos++;
     return true;
 }
 
-bool eliminarPrimero(ListaSimple * lista, Tipo * elemento) {
+bool eliminarPrimero(ListaCircular * lista, Tipo * elemento) {
     Nodo * auxiliar;
 
     if (estaVacia(lista))
@@ -50,7 +52,7 @@ bool eliminarPrimero(ListaSimple * lista, Tipo * elemento) {
     return true;
 }
 
-bool insertarFinal(ListaSimple * lista, Tipo elemento) {
+bool insertarFinal(ListaCircular * lista, Tipo elemento) {
     Nodo * nuevo_nodo = malloc(sizeof(Nodo));
 
     if (!nuevo_nodo)
@@ -69,11 +71,11 @@ bool insertarFinal(ListaSimple * lista, Tipo elemento) {
     return true;
 }
 
-bool eliminarUltimo(ListaSimple * lista, Tipo * elemento) {
+bool eliminarUltimo(ListaCircular * lista, Tipo * elemento) {
     return eliminar(lista, elemento, lista->numero_elementos - 1);
 }
 
-bool insertar(ListaSimple * lista, Tipo elemento, int posicion) {
+bool insertar(ListaCircular * lista, Tipo elemento, int posicion) {
     int indice = 1;
     Nodo * previo, * posterior;
     Nodo * nuevo_nodo;
@@ -106,7 +108,7 @@ bool insertar(ListaSimple * lista, Tipo elemento, int posicion) {
     return true;
 }
 
-bool eliminar(ListaSimple * lista, Tipo * elemento, int posicion) {
+bool eliminar(ListaCircular * lista, Tipo * elemento, int posicion) {
     int indice = 1;
     Nodo * previo, * nodo_eliminar;
 
@@ -128,14 +130,33 @@ bool eliminar(ListaSimple * lista, Tipo * elemento, int posicion) {
     return true;
 }
 
-int32_t indice(ListaSimple * lista, Tipo elemento) {
-    int32_t i = 0;
+int indice(ListaCircular * lista, Tipo elemento) {
+    int i = 0;
     Nodo * auxiliar = lista->primero;
 
-    while (auxiliar && comparar(auxiliar->dato, elemento) != 0)
-        auxiliar = auxiliar->siguiente, i++;
+    while ( i < lista->numero_elementos
+            && comparar(auxiliar->dato, elemento) != 0 ) {
 
-    if (!auxiliar)
+        auxiliar = auxiliar->siguiente;
+        i++;
+    }
+
+    if (auxiliar)
+        i = -1;
+
+    return i;
+}
+
+bool indiceRev(ListaCircular * lista, Tipo elemento) {
+    int i = lista->numero_elementos - 1;
+    Nodo * auxiliar = lista->ultimo;
+
+    while ( i >= 0 && comparar(auxiliar->dato, elemento) != 0 ) {
+        auxiliar = auxiliar->siguiente;
+        i--;
+    }
+
+    if (auxiliar)
         i = -1;
 
     return i;
@@ -145,6 +166,6 @@ inline int32_t comparar(Tipo elemento1, Tipo elemento2) {
     return elemento1 - elemento2;
 }
 
-inline bool estaVacia(ListaSimple * lista) {
+inline bool estaVacia(ListaCircular * lista) {
     return lista->numero_elementos == 0;
 }
