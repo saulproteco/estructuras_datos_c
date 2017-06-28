@@ -9,22 +9,26 @@
 
 /*-* Constructor / Desctructor *-*/
 PilaEstatica * nuevaPila(int32_t tamanio) {
-    if (tamanio < 0)
+    // No se admite 0 o menos como tamanio
+    if (tamanio <= 0)
         return NULL;
 
+    // Intentamos asignar memoria para las variables de la pila
+    // (tope, tamanio, y espacio), en caso de que falle regresamos
+    // NULL
     PilaEstatica * nueva_pila = malloc(sizeof(PilaEstatica));
-
     if (!nueva_pila)
         return NULL;
 
-    // Se supone que los argumentos de calloc van al revez pero me vale!
-    nueva_pila->elementos = calloc(sizeof(Tipo), tamanio);
+    // Intentamos asignar memoria para el arreglo de elementos
+    // que van a estar guardados en la pila
+    nueva_pila->elementos = calloc(tamanio ,sizeof(Tipo));
     if (!nueva_pila->elementos) {
         free(nueva_pila);
         return NULL;
     }
 
-
+    // Inicializamos las variables de la pila
     nueva_pila->tamanio = tamanio;
     nueva_pila->tope = -1;
 
@@ -50,6 +54,8 @@ bool eliminar(PilaEstatica * pila, Tipo * sacado) {
         return false;
 
     *sacado = pila->elementos[pila->tope];
+    // Borramos el valor que habia antes poniendo el valor por
+    // defecto
     pila->elementos[pila->tope--] = VALOR_DEFECTO;
 
     return true;
