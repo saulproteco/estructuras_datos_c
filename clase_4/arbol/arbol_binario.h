@@ -9,13 +9,15 @@ typedef int32_t Tipo;
 typedef struct nodo Nodo;
 struct nodo {
     Tipo dato;
+
+    // Apuntadores a padre e hijos
+    struct nodo * padre;
     struct nodo * hijoIzq;
     struct nodo * hijoDer;
-    struct nodo * padre;
-}
+};
 
-typedef struct bst ArbolBinario;
-struct bst {
+typedef struct arbolb ArbolBinario;
+struct arbolb {
     Nodo * raiz;
 
     int32_t niveles;
@@ -23,10 +25,12 @@ struct bst {
 };
 
 ArbolBinario * nuevoArbol(void);
-void eliminarArbol(ArbolBinario * arbol);
+void liberarArbol(ArbolBinario * arbol);
+
+Nodo * nuevoNodo(Tipo dato);
 
 bool insertar(ArbolBinario * arbol, Tipo elemento);
-bool eliminar(ArbolBinario * arbol, Tipo * sacado);
+bool eliminar(ArbolBinario * arbol, Tipo a_sacar);
 
 bool existe(ArbolBinario * arbol, Tipo elemento);
 
