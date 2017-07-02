@@ -1,7 +1,9 @@
-#include <stdbool.h>
-#include <stdint.h>
+#ifndef _LISTA_DOBLE_CIRCULAR_H
+#define _LISTA_DOBLE_CIRCULAR_H
 
-typedef int32_t Tipo;
+#include <stdbool.h>
+
+typedef int Tipo;
 
 typedef struct lcnodo Nodo;
 struct lcnodo {
@@ -16,21 +18,27 @@ struct listadb {
     Nodo * primero;
     Nodo * ultimo;
 
-    int32_t numero_elementos;
+    int numero_elementos;
+    bool ordenado;
 };
 
 ListaCircular * nuevaLista(void);
 void eliminarLista(ListaCircular * lista);
 
 bool insertarPrincipio(ListaCircular * lista, Tipo elemento);
-bool eliminarPrimero(ListaCircular * lista, Tipo * elemento);
+bool eliminarPrimero(ListaCircular * lista, Tipo * sacado);
 
 bool insertarFinal(ListaCircular * lista, Tipo elemento);
-bool eliminarUltimo(ListaCircular * lista, Tipo * elemento);
+bool eliminarUltimo(ListaCircular * lista, Tipo * sacado);
 
 bool insertar(ListaCircular * lista, Tipo elemento, int posicion);
-bool eliminar(ListaCircular * lista, Tipo * elemento, int posicion);
+bool eliminar(ListaCircular * lista, Tipo * sacado, int posicion);
+
+void ordenarAscendente(ListaCircular * lista);
+void ordenarDescendente(ListaCircular * lista);
 
 bool existe(ListaCircular * lista, Tipo elemeno);
-extern int32_t comparar(Tipo elemento1, Tipo elemento2);
+extern int comparar(Tipo elemento1, Tipo elemento2);
 extern bool estaVacia(ListaCircular * lista);
+
+#endif // _LISTA_DOBLE_CIRCULAR_H
